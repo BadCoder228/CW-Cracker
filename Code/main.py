@@ -3,6 +3,7 @@ from sys import exit
 from art import tprint
 from time import sleep
 from colorama import Fore
+from ast import literal_eval
 from colorama.ansi import AnsiFore
 
 VERSION = 1.1
@@ -32,7 +33,9 @@ def inject() -> None:
     try:
         # Editing the data file
         with open(PATH + "/metaData.m", "w") as file:
-            file.write("""SerializedMetaProgression, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|{"MetaCoins":1000000,"UnlockedHats":[0,1,2,3,4,5,6,7,9,10,11,12,13,15,16,17,18,19,20,14,30,8,21,22,23,24,25,26,27,28,29],"UnlockedIslandUpgrades":[0,4,2,3,1]}""")
+            file.write(
+                """SerializedMetaProgression, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|{"MetaCoins":1000000,"UnlockedHats":[0,1,2,3,4,5,6,7,9,10,11,12,13,15,16,17,18,19,20,14,30,8,21,22,23,24,25,26,27,28,29],"UnlockedIslandUpgrades":[0,4,2,3,1]}"""
+                )
             file.close()
 
         for i in os.listdir(PATH):
@@ -43,13 +46,15 @@ def inject() -> None:
                     file_data = file.read()
                     file.close()
 
-                file_dict = dict(file_data[96:])
+                file_dict = literal_eval(str(file_data[97:]))
                 file_data = file_data[:97]
+
+                print(file_dict)
 
                 file_dict["Money"] = 1000000
 
                 with open(current_path, "w") as file:
-                    file.write(file_data+file_dict)
+                    file.write(f"{file_data}{str(file_dict).replace("'", "\"")}")
                     file.close()
 
         # Success!
