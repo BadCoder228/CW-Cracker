@@ -11,7 +11,7 @@ PATH = f"C:/Users/{os.getlogin()}/AppData/LocalLow/Landfall Games/Content Warnin
 
 #functions
 def main() -> None:
-    banner(Fore.BLUE, "Cracker", f"Content Warning Cracker\nby Wormyy\nv. {VERSION}\n")
+    banner(Fore.MAGENTA, "The  Cracker Program", f"by Wormyy\nv. {VERSION}\n")
     input("Press \"enter\" to start the injection\n>>>")
     inject()
 
