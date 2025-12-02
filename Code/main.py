@@ -49,8 +49,6 @@ def inject() -> None:
                 file_dict = literal_eval(str(file_data[97:]))
                 file_data = file_data[:97]
 
-                print(file_dict)
-
                 file_dict["Money"] = 1000000
 
                 with open(current_path, "w") as file:
