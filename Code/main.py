@@ -9,13 +9,15 @@ from colorama.ansi import AnsiFore
 from os import getlogin, listdir, system
 
 # const data
-VERSION: str = 1.2
+VERSION_MAJOR: str = 1
+VERSION_MINOR: str = 2
+VERSION_PATCH: str = 4
 PATH: str = f"C:/Users/{getlogin()}/AppData/LocalLow/Landfall Games/Content Warning/Saves"
 
 # default data
 MONEY: int = 1000000
 MC_MONEY: int = 1000000
-ISLAND_UPGRADES: list = list(range(0, 4))
+ISLAND_UPGRADES: list = list(range(0, 5))
 UNLOCKED_HATS: list = list(range(0, 31))
 
 #functions
@@ -23,7 +25,7 @@ def main() -> None:
     if not exists("data.json"):
         create_file()
 
-    banner(Fore.MAGENTA, "The  Cracker Program", f"by Wormyy\nv. {VERSION}\n")
+    banner(Fore.MAGENTA, "The  Cracker Program", f"by Wormyy\nv. {VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}\n")
     while asker() != 0:
         asker()
     
@@ -60,7 +62,7 @@ def timer(seconds : int = 5, shutdown: bool = True) -> None:
             exit() # and i know that i can use the 'quit' key phrase but it gives an error at the last second
 
 def overwrite() -> None:
-    new_data: dict = {"World_money" : None, "Mc_money" : None, "Island_buildings" : None, "Hats" : None}
+    new_data: dict = {"World_money":None,"Mc_money":None,"Island_buildings":None,"Hats":None}
     for i in range(4):
         key_var: str = list(new_data.keys())[i]
         banner(Fore.LIGHTYELLOW_EX, "Rewrite the value", f"Set a value for a \"{key_var}\" variable\n")
@@ -84,7 +86,7 @@ def overwrite() -> None:
         timer(shutdown=False)
         main()
 
-def create_file(dictionary_to_write : dict = {"World_money" : MONEY, "Mc_money" : MC_MONEY, "Island_buildings" : ISLAND_UPGRADES, "Hats" : UNLOCKED_HATS}) -> None:
+def create_file(dictionary_to_write : dict = {"World_money": MONEY,"Mc_money":MC_MONEY,"Island_buildings":ISLAND_UPGRADES,"Hats":UNLOCKED_HATS}) -> None:
     with open("data.json", "w") as file:
         dump(dictionary_to_write, file)
 
@@ -101,11 +103,11 @@ def inject() -> None:
         gained_data: dict = gain_data()
 
     finally:
-        formatted_local_data : dict = {"MetaCoins": gained_data["Mc_money"], "UnlockedHats": gained_data["Hats"], "UnlockedIslandUpgrades": gained_data["Island_buildings"]}
+        formatted_local_data : dict = {"MetaCoins":gained_data["Mc_money"],"UnlockedHats":gained_data["Hats"],"UnlockedIslandUpgrades":gained_data["Island_buildings"]}
 
         try:
             with open(PATH + "/metaData.m", "w") as file:
-                file.write(f"SerializedMetaProgression, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|{str(formatted_local_data).replace("'", "\"")}")
+                file.write(f"SerializedMetaProgression, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|{str(formatted_local_data).replace("'", "\"").replace(" ", "")}")
                 file.close()
 
             for i in listdir(PATH):
@@ -135,6 +137,6 @@ def inject() -> None:
             print("\n\n")
             timer()
 
-# launch the program
+# Launch the program
 if __name__ == '__main__':
     main()
