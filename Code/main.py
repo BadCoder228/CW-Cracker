@@ -38,6 +38,7 @@ def asker() -> int:
             create_file()
             banner(Fore.GREEN, "Done!", "The values have been overwritten to default ones!\n")
             timer(shutdown=False)
+            main()
         case _:
             print(Fore.RED + "\nUnknown option\n\n" + Fore.WHITE)
             return 1
